@@ -32,6 +32,23 @@ def create_model(nb_actions, observation_shape):
     return model
 
 
+def create_dqn(model, nb_actions):
+    """Creates and compiles a DQN agent with an Adam optimizer."""
+    memory = SequentialMemory(limit=100000, window_length=1)
+    policy = MaxBoltzmannQPolicy(tau=10, eps=0.2)
+    dqn = DQNAgent(
+        model=model,
+        nb_actions=nb_actions,
+        memory=memory,
+        target_model_update=1e-2,
+        policy=policy,
+        gamma=0.995,
+        batch_size=64)
+    dqn.compile(Adam(lr=5e-4, decay=0.0), metrics=['mae'])
+
+    return dqn
+
+
 def main():
     env = gym.make('SatelliteDrag-v0' if len(sys.argv) < 2 else sys.argv[1])
     env.seed(99)
@@ -44,17 +61,7 @@ def main():
     with open("model.json", "w") as json_file:
         json_file.write(model_json)
 
-    memory = SequentialMemory(limit=100000, window_length=1)
-    policy = MaxBoltzmannQPolicy(tau=10, eps=0.2)
-    dqn = DQNAgent(
-        model=model,
-        nb_actions=nb_actions,
-        memory=memory,
-        target_model_update=1e-2,
-        policy=policy,
-        gamma=0.995,
-        batch_size=64)
-    dqn.compile(Adam(lr=5e-4, decay=0.0), metrics=['mae'])
+    dqn = create_dqn(model, nb_actions)
 
     # If saved weights exist, load them
     filename = "dqn_Satellite_weights.h5f"
