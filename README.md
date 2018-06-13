@@ -35,16 +35,21 @@ correct orbital angular velocity by minimising fuel consumption.
 
 ## Example solution
 The file `dqn_satellite.py` implements a DQN using Max-Boltzmann exploration in
-keras-rl. It can solve environments 1 and 2 above. I am currently working on
-environment 3.
-
+keras-rl. It can learn to solve environments 1 and 2 above.
 The weights in this repository have been pre-trained for environment 1 above.
 Running `test_dqn_satellite.py` will show the agent in action.
-
-A video of environment 2 (with atmospheric drag) is available at
+A video of environment 1 (with atmospheric drag) is available at
 https://youtu.be/bgc_k1CebPI.
 
-The red circle
+While I have not been able to
+train an agent only on environment 3, i.e. with a satellite starting from
+rest, an agent that has been trained on environment 1 is able to solve environment 3.
+See https://youtu.be/Otri0fNgS3E for a video.
+
+I am currently working on how an agent can learn to propel the satellite into
+orbit from rest without having been trained on easier environments first.
+
+In the videos, the red circle
 shows the target orbit and the red indicator at the bottom of the screen shows
 how close the satellite is to the ideal angular velocity. It clearly shows that
 the agent learns to minimise fuel consumption by keeping the satellite at the
