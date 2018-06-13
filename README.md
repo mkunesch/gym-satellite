@@ -41,13 +41,11 @@ Running `test_dqn_satellite.py` will show the agent in action.
 A video of environment 1 (with atmospheric drag) is available at
 https://youtu.be/bgc_k1CebPI.
 
-While I have not been able to
-train an agent only on environment 3, i.e. with a satellite starting from
-rest, an agent that has been trained on environment 1 is able to solve environment 3.
+An agent that has been trained on environment 1 can also solve environment 3,
+i.e. it can propel a satellite into the correct orbit from rest.
 See https://youtu.be/Otri0fNgS3E for a video.
-
-I am currently working on how an agent can learn to propel the satellite into
-orbit from rest without having been trained on easier environments first.
+I have not yet been able to train an agent on environment 3 only. This is work
+in progress.
 
 In the videos, the red circle
 shows the target orbit and the red indicator at the bottom of the screen shows
