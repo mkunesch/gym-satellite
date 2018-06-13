@@ -7,8 +7,8 @@ class SatellitePerturbation(SatelliteBasic):
     """Satellite environment with initial perturbation.
 
     The satellite is put into the correct orbit but its radius and angular
-    velocity are perturbed by 10%. The agent has to return it to the correct
-    orbit.
+    velocity are perturbed. The agent has to return it to the correct
+    orbit. Increase the initial perturbation to make the task harder.
     """
     initial_perturbation = 0.15
     start_from_rest = False

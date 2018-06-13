@@ -2,11 +2,11 @@
 A satellite envrionment for OpenAI gym
 
 This environment for OpenAI gym (https://gym.openai.com) consists of a satellite
-orbiting a planet with an atmosphere. The aim is to keep the satellite at a
-fixed orbital radius by firing the 4 engines as rarely as is necessary. To make
-this task harder, the satellite can be started from rest, a random perturbation
-can be applied to the satellite, and (grossly exaggerated) atmospheric drag can
-be added to cause orbital decay.
+orbiting a planet. The aim is to keep the satellite at a fixed orbital radius by
+firing the 4 engines as rarely as is necessary. To make this task harder, the
+satellite can be started from rest, a random perturbation can be applied to the
+satellite, and (grossly exaggerated) atmospheric drag can be added to cause
+orbital decay.
 
 The agent is rewarded for keeping the satellite close to the desired orbital
 radius. The agent is penalised for using fuel.
@@ -87,7 +87,7 @@ class SatelliteBasic(gym.Env):
     """Base version of satellite environment for OpenAI gym.
 
     In this base version, the satellite is in the perfect orbit and no action is
-    required. To introduce a challenge inherit from this basic version and
+    required. To introduce a challenge, inherit from this basic version and
     change the three parameters below.
     """
 
@@ -260,6 +260,7 @@ class SatelliteBasic(gym.Env):
             self.viewer = None
 
     def _fire_engine(self, engine_number):
+        """Fires a given engine of the satellite."""
         fired_direction = math.pi * (1 + engine_number) / 2
         engine_position = self.satellite.position + [
             math.cos(fired_direction) * SATELLITE_WIDTH / 2,
@@ -283,27 +284,7 @@ class SatelliteBasic(gym.Env):
                                     True)
 
     def _render_indicators(self):
-        direction = [
-            self.satellite.position[0] - EARTH_POS[0],
-            self.satellite.position[1] - EARTH_POS[1]
-        ]
-        distance = math.sqrt(direction[0]**2 + direction[1]**2)
-        vel = self.satellite.linearVelocity
-        orbital_velocity = (
-            direction[0] * vel.y - direction[1] * vel.x) / distance
-
-        # Angular velocity indicator
-        velocity_difference = (
-            -orbital_velocity / distance - ORBITAL_ANGULAR_VEL)
-        # yapf: disable
-        self.viewer.draw_polygon(
-            [[DOMAIN_SIZE / 2, 1], [DOMAIN_SIZE / 2, 1.5],
-             [DOMAIN_SIZE / 2 + velocity_difference * 5, 1.5],
-             [DOMAIN_SIZE / 2 + velocity_difference * 5, 1]],
-            color=(0.8, 0.2, 0.2),
-            filled=True)
-        # yapf: enable
-
+        """Renders the radius and the angular velocity indicator"""
         # Orbital radius indicator
         transform_to_center = rendering.Transform(translation=EARTH_POS)
         self.viewer.draw_circle(
@@ -314,6 +295,28 @@ class SatelliteBasic(gym.Env):
             filled=False,
             linewidth=2,
             transform=transform_to_center).add_attr(transform_to_center)
+
+        # Calculate angular velocity difference
+        direction = [
+            self.satellite.position[0] - EARTH_POS[0],
+            self.satellite.position[1] - EARTH_POS[1]
+        ]
+        distance = math.sqrt(direction[0]**2 + direction[1]**2)
+        vel = self.satellite.linearVelocity
+        orbital_velocity = (
+            direction[0] * vel.y - direction[1] * vel.x) / distance
+        velocity_difference = (
+            -orbital_velocity / distance - ORBITAL_ANGULAR_VEL)
+
+        # Draw the angular velocity indicator
+        # yapf: disable
+        self.viewer.draw_polygon(
+            [[DOMAIN_SIZE / 2, 1], [DOMAIN_SIZE / 2, 1.5],
+             [DOMAIN_SIZE / 2 + velocity_difference * 5, 1.5],
+             [DOMAIN_SIZE / 2 + velocity_difference * 5, 1]],
+            color=(0.8, 0.2, 0.2),
+            filled=True)
+        # yapf: enable
 
     def _create_satellite(self):
         angle = np.random.uniform(0, 2 * math.pi)
@@ -330,7 +333,7 @@ class SatelliteBasic(gym.Env):
                 density=5.0,
                 friction=0.1,
                 categoryBits=0x0010,
-                maskBits=0x0020,  # collide only with earth
+                maskBits=0x0020,  # collide only with Earth
                 restitution=0.0))
         satellite.color1 = (0.5, 0.5, 0.5)
         satellite.color2 = (0., 0., 0.)

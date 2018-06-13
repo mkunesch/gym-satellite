@@ -19,11 +19,11 @@ as possible while keeping the satellite in its orbit (see
 https://youtu.be/bgc_k1CebPI for a video).
 
 2. `SatellitePerturbation-v0`: the satellite is given a random initial
-perturbation away from its orbit and the agent has to learn to return it to a
+perturbation away from its orbit. The agent has to learn to return it to a
 stable orbit with minimal fuel consumption.
 
 3. `SatelliteRest-v0`: the satellite is started almost from rest. The agent
-has to fire the engines to get it into orbit (since that will allow it to save
+has to fire the engines to get it into orbit (since this will allow it to save
 fuel in the long run). This is hard but not impossible.
 
 In all environments the agent receives a reward for keeping the satellite close
