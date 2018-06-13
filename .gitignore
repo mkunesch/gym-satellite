@@ -1,0 +1,5 @@
+*.h5f
+*.swp
+*.json
+*.egg-info
+*.pyc
