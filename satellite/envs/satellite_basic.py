@@ -343,7 +343,7 @@ class SatelliteBasic(gym.Env):
         speed = ORBITAL_ANGULAR_VEL * ORBITAL_RADIUS * (1 + speed_deviation)
 
         if self.start_from_rest:
-            speed *= 0.1
+            speed *= 0.05
 
         satellite.linearVelocity = (speed * math.sin(angle),
                                     -speed * math.cos(angle))
