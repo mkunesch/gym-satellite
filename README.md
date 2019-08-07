@@ -1,4 +1,7 @@
 # Satellite environment
+
+## Update: as of June 2018 I am no longer adding or making changes to this code. I'm leaving it online in case anyone is interested.
+
 An environment for OpenAI gym (https://gym.openai.com) in which an agent has to
 learn to keep a satellite in a given orbit around Earth by firing its engines.
 To make the task more difficult, random initial perturbations and (grossly
