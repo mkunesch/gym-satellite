@@ -8,9 +8,9 @@ To make the task more difficult, random initial perturbations and (grossly
 exaggerated) atmospheric drag can be added or the satellite can be started from
 rest.
 
-Disclaimer: I am not an expert on machine learning. This is a practice project I
-worked on to familiarise myself with OpenAI gym and to experiment with reinforcement
-learning.
+Disclaimer: when I wrote this code, I was not an expert in machine learning and
+only used this experiment as a practice project to familiarise myself with
+OpenAI gym and to experiment with reinforcement learning.
 Feedback, comments, and criticism are very welcome!
 
 ## Environments
